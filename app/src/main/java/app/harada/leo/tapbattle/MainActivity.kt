@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         textView1.text = "0"
         textView2.text = "0"
 
+        winnerLabel.text = ""
+
         startButton.setOnClickListener {
             timer(period = 1000) {
                 handler.post {
@@ -36,6 +38,10 @@ class MainActivity : AppCompatActivity() {
                         } else if (number1 == number2) {
                             winner = "どっちも"
                         }
+
+                        winnerLabel.text = "勝者は" + winner + "！"
+
+                        winner = "Player1"
 /*
                         AlertDialog.Builder(this)
                             .setTitle("Finish!")
