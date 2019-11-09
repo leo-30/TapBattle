@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     var number2: Int = 0
     var timerCount: Int = 10
     val handler: Handler = Handler()
-    var winner: String = "Player1"
+    var winner: String = "左の人"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +26,13 @@ class MainActivity : AppCompatActivity() {
 
         startButton.setVisibility(View.VISIBLE)
         restartButton.setVisibility(View.INVISIBLE)
+        tapButton1.setEnabled(false)
+        tapButton2.setEnabled(false)
 
         startButton.setOnClickListener {
             startButton.setVisibility(View.INVISIBLE)
+            tapButton1.setEnabled(true)
+            tapButton2.setEnabled(true)
             timer(period = 1000) {
                 handler.post {
                     timerCount--
@@ -37,9 +41,11 @@ class MainActivity : AppCompatActivity() {
                         timerCount = 0
                         textView3.text = timerCount.toString()
                         restartButton.setVisibility(View.VISIBLE)
+                        tapButton1.setEnabled(false)
+                        tapButton2.setEnabled(false)
 
                         if (number2 > number1) {
-                            winner = "Player2"
+                            winner = "右の人"
                         } else if (number1 == number2) {
                             winner = "どっちも"
                         }
@@ -54,10 +60,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         restartButton.setOnClickListener {
+            tapButton1.setEnabled(true)
+            tapButton2.setEnabled(true)
             number1 = 0
             number2 = 0
             timerCount = 10
-            winner = "Player1"
+            winner = "左の人"
             textView1.text = number1.toString()
             textView2.text = number2.toString()
             textView3.text = timerCount.toString()
