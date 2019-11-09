@@ -3,7 +3,7 @@ package app.harada.leo.tapbattle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AlertDialog
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.timer
 
@@ -24,7 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         winnerLabel.text = ""
 
+        startButton.setVisibility(View.VISIBLE)
+        restartButton.setVisibility(View.INVISIBLE)
+
         startButton.setOnClickListener {
+            startButton.setVisibility(View.INVISIBLE)
             timer(period = 1000) {
                 handler.post {
                     timerCount--
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                     if (timerCount <= 0) {
                         timerCount = 0
                         textView3.text = timerCount.toString()
+                        restartButton.setVisibility(View.VISIBLE)
 
                         if (number2 > number1) {
                             winner = "Player2"
@@ -40,28 +45,25 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         winnerLabel.text = "勝者は" + winner + "！"
-
-                        winner = "Player1"
-/*
-                        AlertDialog.Builder(this)
-                            .setTitle("Finish!")
-                            .setMessage("勝者は")
-                            .setPositiveButton("もう一度プレイ") { dialog, which ->
-                                // もう一度プレイが押された時の挙動
-                                number1 = 0
-                                number2 = 0
-                                timerCount = 10
-                                winner = "Player1"
-                            }
-                            .setIcon(R.mipmap.ic_launcher)
-                            .show()
-                            */
                     }
 
                     textView3.text = timerCount.toString()
 
                 }
             }
+        }
+
+        restartButton.setOnClickListener {
+            number1 = 0
+            number2 = 0
+            timerCount = 10
+            winner = "Player1"
+            textView1.text = number1.toString()
+            textView2.text = number2.toString()
+            textView3.text = timerCount.toString()
+            winnerLabel.text = ""
+            startButton.setVisibility(View.INVISIBLE)
+            restartButton.setVisibility(View.INVISIBLE)
         }
 
         tapButton1.setOnClickListener {
